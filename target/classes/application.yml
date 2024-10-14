@@ -1,0 +1,41 @@
+## artefacto base aplicación sgsstve
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      connection-timeout: 20000
+    database: ${MYSQL_DATABASE:transaction_service}
+    host: ${MYSQL_HOST:localhost}
+    port: ${MYSQL_PORT:3309}
+    username: ${MYSQL_USERNAME:local_dev}
+    password: ${MYSQL_PASSWORD:nfcaceres2024}
+    url: jdbc:mysql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.database}?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=America/Bogota
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        show_sql: true
+#logging.level.com.muverang.dmc.pulpo.feingRepository.PulpoFeingRepository: DEBUG
+server:
+  port: 9001
+  servlet:
+    context-path: /corebank/transaction-service
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
