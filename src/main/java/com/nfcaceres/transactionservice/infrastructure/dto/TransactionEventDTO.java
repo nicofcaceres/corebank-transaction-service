@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TransactionEventDTO {
     private long transactionId;
+    private String transactionType;
 }

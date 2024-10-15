@@ -11,24 +11,24 @@ import com.nfcaceres.transactionservice.domain.models.TransactionType;
 
 import java.math.BigDecimal;
 
-public class CreateWithdrawalUC {
+public class CreateDepositUC {
 
     private final ITransactionService transactionService;
 
-    public CreateWithdrawalUC(ITransactionService transactionService) {
+    public CreateDepositUC(ITransactionService transactionService) {
         this.transactionService = transactionService;
     }
 
-    public TransactionDTO execute(Long fromAccountId, BigDecimal amount) {
+    public TransactionDTO execute(Long fromAccountId, BigDecimal amount){
         Transaction transaction = Transaction.builder()
-                .transactionType(TransactionType.WITHDRAWAL)
-                .caracter(TransactionCaracter.DEBIT)
+                .transactionType(TransactionType.DEPOSIT)
+                .caracter(TransactionCaracter.CREDIT)
                 .fromAccountId(fromAccountId)
                 .eventPhase(TransactionEventPhase.INITIATED)
                 .amount(amount)
                 .build();
         transaction = transactionService.saveTransaction(transaction);
-        boolean published = transactionService.postEvent(transaction.getId(), transaction.getEventPhase(), transaction.getTransactionType());
+        boolean published = transactionService.postEvent(transaction.getId(), transaction.getEventPhase(),transaction.getTransactionType());
         if (!published){
             transaction.setStatus(TransactionStatus.FAILED);
             transaction = transactionService.saveTransaction(transaction);

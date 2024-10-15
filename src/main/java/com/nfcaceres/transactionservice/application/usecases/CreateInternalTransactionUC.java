@@ -11,19 +11,19 @@ import com.nfcaceres.transactionservice.domain.models.TransactionType;
 
 import java.math.BigDecimal;
 
-public class CreateWithdrawalUC {
-
+public class CreateInternalTransactionUC {
     private final ITransactionService transactionService;
 
-    public CreateWithdrawalUC(ITransactionService transactionService) {
+    public CreateInternalTransactionUC(ITransactionService transactionService) {
         this.transactionService = transactionService;
     }
 
-    public TransactionDTO execute(Long fromAccountId, BigDecimal amount) {
+    public TransactionDTO execute(Long fromAccountId, Long toAccountId,BigDecimal amount) {
         Transaction transaction = Transaction.builder()
-                .transactionType(TransactionType.WITHDRAWAL)
+                .transactionType(TransactionType.INTERNAL_TRANSFER)
                 .caracter(TransactionCaracter.DEBIT)
                 .fromAccountId(fromAccountId)
+                .toAccountId(toAccountId)
                 .eventPhase(TransactionEventPhase.INITIATED)
                 .amount(amount)
                 .build();
