@@ -26,7 +26,15 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
         show_sql: true
-#logging.level.com.muverang.dmc.pulpo.feingRepository.PulpoFeingRepository: DEBUG
+aws:
+  region: ${AWS_REGION:aws_region}
+  access:
+    key: ${AWS_ACCESS_KEY:aws_access_key}
+  secret:
+    key: ${AWS_SECRET_KEY:aws_secret_key}
+  event-bridge:
+    bus: ${BUS_EVENT:corebank_event_bus}
+    source: ${BUS_EVENT_SOURCE:transaction_service}
 server:
   port: 9001
   servlet:
