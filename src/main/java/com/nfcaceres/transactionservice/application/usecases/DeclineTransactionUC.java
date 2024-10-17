@@ -1,6 +1,5 @@
 package com.nfcaceres.transactionservice.application.usecases;
 
-
 import com.nfcaceres.transactionservice.application.adapters.ITransactionService;
 import com.nfcaceres.transactionservice.application.data.TransactionDTO;
 import com.nfcaceres.transactionservice.application.execeptions.TransactionNotFoundException;
@@ -11,11 +10,11 @@ import com.nfcaceres.transactionservice.domain.models.TransactionStatus;
 
 import java.util.Optional;
 
-public class CompleteTransactionUC {
+public class DeclineTransactionUC {
 
     private final ITransactionService transactionService;
 
-    public CompleteTransactionUC(ITransactionService transactionService) {
+    public DeclineTransactionUC(ITransactionService transactionService) {
         this.transactionService = transactionService;
     }
 
@@ -24,7 +23,7 @@ public class CompleteTransactionUC {
         Transaction transaction = optionalTransaction.orElseThrow(() ->
                 new TransactionNotFoundException(String.format("No se pudo encontrar la transaccion requerida; %s", transactionId))
         );
-        transaction.setStatus(TransactionStatus.COMPLETED);
+        transaction.setStatus(TransactionStatus.FAILED);
         transaction.setEventPhase(TransactionEventPhase.COMPLETED);
         transaction = transactionService.saveTransaction(transaction);
 

@@ -10,6 +10,8 @@ import com.nfcaceres.transactionservice.infrastructure.persistence.TransactionRe
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TransactionService implements ITransactionService {
 
@@ -35,5 +37,10 @@ public class TransactionService implements ITransactionService {
                 .transactionType(transactionType.name())
                 .build();
         return eventBridgeBaseSender.sendEvent(transactionEventDTO,transactionEventPhase.name() );
+    }
+
+    @Override
+    public Optional<Transaction> findById(long transactionId) {
+        return transactionRepository.findById(transactionId);
     }
 }
